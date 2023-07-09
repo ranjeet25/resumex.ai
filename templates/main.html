@@ -1,0 +1,174 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <title>RESUMEX</title>
+  </head>
+  <body>
+    <navbar>
+      <nav class="navbar navbar-expand-lg px-2">
+        <div class="nav-bg py-3 container-fluid rounded-4 shadow-sm">
+          <a class="navbar-brand px-4" href="#"> <b>RESUMEX</b></a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">About us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Support</a>
+              </li>
+            
+             
+            </ul>
+
+            <b style="font-size: 0.8rem;" class="  rounded-pill">
+            Developed By Ranjeet Saw 🧑‍💻
+            </b>
+           
+          </div>
+        </div>
+      </nav>
+    </navbar>
+
+  
+
+    <div class="main_container container-fluid ">
+      <div class="row">
+        <div class="info_box col-md">
+          <h2 style="color: #54267a;" class="my-4 fw-bold">Instruction</h2>
+          <div class="container">
+            <div style="background: white;" class="row w-100 bg-light p-1 rounded-2 my-2 shadow-sm">
+              <p  style="font-size: 0.88rem;"> A tool that analyzes a job seeker's resume and compares the resume to a job listing to identify the skills the recruiter or hiring manager will be looking for based on the context of the job. </p>
+           
+            </div>
+            <p class="my-3 fw-bold">Steps to follow</p>
+            
+            <div class="row w-100 bg-light p-2 rounded-2 my-2 shadow-sm">
+             1️⃣ Paste your job description
+            </div>
+            <div class="row w-100 bg-light p-2 rounded-2 my-2 shadow-sm">
+             2️⃣ Upload your resume in PDF format.
+            </div>
+            <div class="row w-100 bg-light p-2 rounded-2 my-2 shadow-sm">
+             3️⃣ Generate result
+            </div>
+           
+          </div>
+          <div class="container mt-4">
+            <div style="background: linear-gradient(to right, #f2dfff, #d4b5ff);" class="row w-100 bg-light p-1 rounded-2 my-2 shadow-sm">
+              <p  style="font-size: 0.88rem; margin-top: 2px;  color: #4b2873;"> <b>Please note*</b> that these grades are hypothetical and depend on the specific criteria and grading scale implemented by the resume scanning system. </p>
+           
+            </div>
+          </div>
+        </div>
+
+
+        <div class="input_box col-md-6 px-4">
+          <!-- <h2 class="my-4 fw-bold text-light">Get Started</h2> -->
+
+          <form  action="data" , method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+            <!-- Email INPUT -->
+          
+            <!-- JD INPUT -->
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Enter Job Description</label
+              >
+              <textarea
+                class="form-control shadow-lg"
+                name="jd"
+                id="exampleFormControlTextarea1"
+                rows="12"
+                required
+              ></textarea>
+            </div>
+            <!-- resume INPUT -->
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Upload your resume in .Pdf</label
+              >
+              <input
+              type="file"
+                class="form-control shadow-lg p-4"
+                name="resume"
+                id="exampleFormControlTextarea1"
+                required
+                rows="3"
+              ></input>
+            </div>
+             <input type="submit" value="Get result" class="btn btn-light shadow-lg"></input>
+          </form>
+        </div>
+
+
+
+
+        <div class="result_box col-md shadow-sm">
+          <h2 style="color: #54267a;" class="my-4 fw-bold">Result</h2>
+         <div class=" result-container container">
+            <div id="result" class=" result_div row  bg-primary p-2 my-2 shadow-sm">
+             {{result}}%
+            </div>
+            <div class="row w-100 bg-light p-1  rounded-2 mt-5 shadow-lg">
+              <p style="font-size: 0.9rem;"> Congrats 🎉 your Resume matches <span> <b>{{result}}% </b></span> with given job
+                description </p>
+            </div>
+            
+   
+             <div class="row w-100 bg-light p-2 rounded-2 mt-2 shadow-lg">
+             <span class="rounded-2 mb-2" style=" background: blueviolet; color: #fff;"> <b>Remark</b></span>
+             <span id="remarks" style=" font-size:0.9rem;">  Result yet to be generated 😞 </span>
+            
+            </div>
+
+            
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+
+    var obj = document.getElementById("result").innerText;
+    let len = obj.length;
+    var temp = obj.slice(0,len-1);
+    var result = parseInt(temp);
+
+    if(result>=70){
+       document.getElementById("remarks").innerHTML = "Excellent!! 😀 Your resume is a perfect match for the job requirements. It showcases extensive experience, comprehensive education, and effectively incorporates keywords. Your achievements and formatting are exceptional, making your resume stand out"
+    }else if(result>=60 && result <80){
+      document.getElementById("remarks").innerHTML = "Good!! 😍 Your resume meets the majority of the job requirements. It showcases relevant experience and education, with some incorporation of keywords. Your achievements and formatting are satisfactory, making your resume competitive in the applicant pool."
+    }else if(result>=40 && result<60){
+      document.getElementById("remarks").innerHTML = "Fair!! 🙂 Your resume partially meets the job requirements. It demonstrates limited experience and education relevant to the position, with minimal incorporation of keywords. Your achievements and formatting need improvement."
+    }else if(result>=20 && result<40){
+      document.getElementById("remarks").innerHTML = "Needs Improvement!!😐 Your resume falls short of the job requirements. It lacks significant experience and relevant skills, with minimal or no incorporation of keywords. Consider revising and strengthening your resume to enhance your chances of success."
+    }else if(result<20){
+      document.getElementById("remarks").innerHTML = "Please consider revising and strengthening your resume to enhance your chances of success.😞"
+    }
+  </script>
+
+
+</html>
+
+{% endblock %}
