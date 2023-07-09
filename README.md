@@ -1,6 +1,7 @@
 # resumex.ai 🤖   
 
-### Resume scanning based on a given job description is a valuable feature offered by resume scanners. It helps streamline the candidate screening process by automatically identifying resumes that closely match the requirements of a specific job.
+### Resume scanning based on a given job description is a valuable feature offered by resume scanners. It helps streamline the candidate screening process by automatically identifying resumes that closely match the requirements of a specific job.  
+#### Try this : http://resumescan.online/ 👈
 
 ## Some Features 👇  
 
